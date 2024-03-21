@@ -26,28 +26,42 @@ const UploadPage = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          className="textarea textarea-primary"
-          placeholder="Bio"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        ></textarea>
-        <div className="flex">
-          <input
-            type="file"
-            className="file-input file-input-bordered file-input-primary w-full max-w-xs flex"
-            accept=".pdf"
-            name="file"
-          />
-          <button className="btn btn-primary ml-56" type="submit">
-            Upload
-          </button>
+    <>
+      <div className="flex justify-center mt-14">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="col-start-2 flex items-center justify-center">
+            <div className="text-center max-w-2xl">
+              <h1 className="text-5xl font-bold text-accent">
+                Applicant Tracking System!!
+              </h1>
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 
 export default UploadPage;
+
+// <div>
+//   <div className="text-center">
+//     <h1 className="text-5xl font-bold text-accent">
+//       Applicant Tracking System!!
+//     </h1>
+//   </div>
+//   <form
+//     onSubmit={handleSubmit}
+//     className="justify-center items-center flex"
+//   >
+//     <div className="w-80">
+//       <textarea
+//         className="textarea textarea-primary w-[68vh] "
+//         placeholder="Bio"
+//         value={text}
+//         onChange={(e) => setText(e.target.value)}
+//       ></textarea>
+//     </div>
+
+//   </form>
+// </div>

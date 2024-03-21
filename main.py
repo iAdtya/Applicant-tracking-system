@@ -3,13 +3,16 @@ from fastapi.middleware.cors import CORSMiddleware
 import os, io, base64
 from PIL import Image
 import pdf2image
-from typing import Annotated
 import google.generativeai as genai
 from dotenv import load_dotenv
 
 load_dotenv()
+from langchain.chat_models import ChatOpenAI
 
-app = FastAPI()
+llm = ChatOpenAI(openai_api_key=os.getenv("OpenAI"))
+app = FastAPI(
+    title="ATS"
+)
 
 # Configure CORS
 app.add_middleware(
@@ -45,12 +48,14 @@ async def create_upload_file(file: UploadFile = File(...), JD: str = Form(...)):
     contents = await file.read()
     pdf_content = await pdf_tokens(contents)  # Call pdf_tokens and await its result
     response = get_gemini_response(JD, pdf_content, input_prompt3)
+    processed_response = llm.invoke(response)
     return {
         "filename": file.filename,
         "text": JD,
         "file_size": len(contents),
-        "res": response,
+        "res": processed_response,
     }
+
 
 async def pdf_tokens(contents):
     if contents is not None:
