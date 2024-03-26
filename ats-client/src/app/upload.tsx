@@ -28,12 +28,37 @@ const UploadPage = () => {
   return (
     <>
       <div className="flex justify-center mt-14">
-        <div className="grid grid-cols-3 gap-4">
-          <div className="col-start-2 flex items-center justify-center">
-            <div className="text-center max-w-2xl">
-              <h1 className="text-5xl font-bold text-accent">
-                Applicant Tracking System!!
-              </h1>
+        <div className="text-center max-w-2xl">
+          <h1 className="text-5xl font-bold text-accent">
+            Applicant Tracking System!!
+          </h1>
+        </div>
+      </div>
+      <div className="flex justify-center mt-10">
+        <input
+          type="file"
+          className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+          accept=".pdf"
+        />
+        <button className="btn btn-primary ml-10">SUBMIT</button>
+      </div>
+      <div className="flex grid-cols-2 justify-center mt-10">
+        <div>
+          <span>Job Description:</span>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              className="w-80 h-96 rounded-xl"
+            ></textarea>
+          </form>
+        </div>
+        <div className="ml-10 mt-5">
+          <div className="card w-72 h-96 bg-primary text-primary-content">
+            <div className="card-body  flex justify-center items-center">
+              <p>
+                
+              </p>
             </div>
           </div>
         </div>
@@ -43,25 +68,3 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
-
-// <div>
-//   <div className="text-center">
-//     <h1 className="text-5xl font-bold text-accent">
-//       Applicant Tracking System!!
-//     </h1>
-//   </div>
-//   <form
-//     onSubmit={handleSubmit}
-//     className="justify-center items-center flex"
-//   >
-//     <div className="w-80">
-//       <textarea
-//         className="textarea textarea-primary w-[68vh] "
-//         placeholder="Bio"
-//         value={text}
-//         onChange={(e) => setText(e.target.value)}
-//       ></textarea>
-//     </div>
-
-//   </form>
-// </div>
