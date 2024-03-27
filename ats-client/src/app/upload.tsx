@@ -5,9 +5,11 @@ import axios from "axios";
 const UploadPage = () => {
   const [text, setText] = useState("");
   const [response, setResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setLoading(true);
     const fileInput = document.querySelector(
       'input[type="file"]'
     ) as HTMLInputElement | null;
@@ -27,6 +29,7 @@ const UploadPage = () => {
       );
       console.log(response.data);
       setResponse(response.data["res"]);
+      setLoading(false);
     }
   };
 
@@ -61,7 +64,13 @@ const UploadPage = () => {
         <div className="ml-10 ">
           <div className="card w-80 h-96 bg-primary text-primary-content">
             <div className="card-body flex justify-center items-center">
-              <p>{response}</p>
+              {loading ? (
+                <span className="loading loading-ring w-14 h-14"></span>
+              ) : response ? (
+                <p>{response}</p>
+              ) : (
+                <p>Please click Submit!!</p>
+              )}
             </div>
           </div>
         </div>
