@@ -4,25 +4,30 @@ import axios from "axios";
 
 const UploadPage = () => {
   const [text, setText] = useState("");
+  const [response, setResponse] = useState(null);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const fileInput = event.target.elements.file;
-    const file = fileInput.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("JD", text);
-
-    const response = await axios.post(
-      "http://localhost:8000/uploadfile/",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    console.log(response.data);
+    const fileInput = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement | null;
+    if (fileInput && fileInput.files) {
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("JD", text);
+      const response = await axios.post(
+        "http://localhost:8000/uploadfile/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+      setResponse(response.data["res"]);
+    }
   };
 
   return (
@@ -40,25 +45,23 @@ const UploadPage = () => {
           className="file-input file-input-bordered file-input-primary w-full max-w-xs"
           accept=".pdf"
         />
-        <button className="btn btn-primary ml-10">SUBMIT</button>
+        <button className="btn btn-primary ml-10" onClick={handleSubmit}>
+          SUBMIT
+        </button>
       </div>
       <div className="flex grid-cols-2 justify-center mt-10">
         <div>
-          <span>Job Description:</span>
-          <form onSubmit={handleSubmit}>
-            <textarea
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              className="w-80 h-96 rounded-xl"
-            ></textarea>
-          </form>
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="w-80 h-96 rounded-xl p-4 textarea textarea-primary"
+            placeholder="Job Description :-"
+          ></textarea>
         </div>
-        <div className="ml-10 mt-5">
-          <div className="card w-72 h-96 bg-primary text-primary-content">
-            <div className="card-body  flex justify-center items-center">
-              <p>
-                
-              </p>
+        <div className="ml-10 ">
+          <div className="card w-80 h-96 bg-primary text-primary-content">
+            <div className="card-body flex justify-center items-center">
+              <p>{response}</p>
             </div>
           </div>
         </div>

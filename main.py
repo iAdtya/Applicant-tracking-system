@@ -8,10 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 from langchain.chat_models import ChatOpenAI
+
 llm = ChatOpenAI(openai_api_key=os.getenv("OpenAI"))
-app = FastAPI(
-    title="ATS"
-)
+app = FastAPI(title="ATS")
 
 # Configure CORS
 app.add_middleware(
@@ -27,7 +26,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 input_prompt3 = """
 You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, 
 your task is to evaluate the resume against the provided job description. give me the percentage of match if the resume matches
-the job description. First the output should come as percentage and then keywords missing and last final thoughts.
+First the output should come as percentage and then keywords missing and last final thoughts.
 """
 
 
@@ -49,10 +48,11 @@ async def create_upload_file(file: UploadFile = File(...), JD: str = Form(...)):
     response = get_gemini_response(JD, pdf_content, input_prompt3)
     processed_response = llm.invoke(response)
     return {
-        "filename": file.filename,
-        "text": JD,
-        "file_size": len(contents),
-        "res": processed_response,
+        # "filename": file.filename,
+        # "text": JD,
+        # "file_size": len(contents),
+        "res": response,
+        "langsmit": processed_response,
     }
 
 
